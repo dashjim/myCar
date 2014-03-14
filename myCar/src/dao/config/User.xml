@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Users">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <typeAlias alias="User" type="model.User"/>
+
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+  <resultMap id="UserResult" class="User">
+  	<result property="id" column="id"/>
+  	<!-- we need to map other columns here. -->
+  </resultMap>
+
+  <select id="selectUsers" resultMap="UserResult">
+    select * from Users
+  </select>
+
+  <select id="selectUserById" parameterClass="int" resultClass="User">
+    select
+      *
+    from Users
+    where ID = #id#
+  </select>
+	
+	<insert id="creatOneUser" parameterClass="User">
+		insert into USERS( NAME, DRIVEYEAR, PWD, EMAIL, CARID, IMG, LEVEL) 
+		values
+		(#name#, #driveYear#, #pwd#, #email#, #carID#, #img#, #level#)
+	</insert>
+	
+	<delete id="deleteOneUserById" parameterClass="int">
+		delete from users where id = #id#
+	</delete>
+	
+	<update id="updateUserById" parameterClass="int">
+		UPDATE users SET NAME = '#name#', DRIVEYEAR = '#driveYear#',
+		 PWD = '#pwd#', EMAIL = '#email#', CARID = '#carID#', IMG = '#img#', LEVEL = '#level#'
+		WHERE id = 'id'
+	</update>
+	
+	<select id="findUserByName" parameterClass="String" resultClass="User">
+	    select
+	      *
+	    from Users
+	    where name = #name#
+  	</select>
+  	
+  <select id="countUserByName" parameterClass="String" resultClass="java.lang.Integer">
+    select
+      count(*)
+    from Users
+    where NAME = #name#
+  </select>
+	
+	<!-- no result set yet -->
+	<select id="findLastUpdatedUsers" parameterClass="java.util.Map" resultClass="User">
+		select b.*
+		from (select userid 
+				from statistics 
+				order by timestamp desc 
+				limit #fromNumber#,#count#) a, 
+			users b 
+		where a.userid=b.id
+  	</select>
+  	
+</sqlMap>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ibatorConfiguration
+  PUBLIC "-//Apache Software Foundation//DTD Apache iBATIS Ibator Configuration 1.0//EN"
+  "http://ibatis.apache.org/dtd/ibator-config_1_0.dtd">
+<ibatorConfiguration>
+  <!-- classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" /-->
+	
+  <!-- this file is for the auto generation of DAO code. -->	
+  <ibatorContext id="MycarTables" targetRuntime="Ibatis2Java2">
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://localhost:3306/mycar"
+        userId="root"
+        password="ahgyjjx">
+    </jdbcConnection>
+
+    <javaModelGenerator targetPackage="model" targetProject="F:\ECLIPSEWORKSPACE\myCar\src">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="dao.config"  targetProject="F:\ECLIPSEWORKSPACE\myCar\src">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <daoGenerator type="GENERIC-CI" targetPackage="dao" targetProject="F:\ECLIPSEWORKSPACE\myCar\src">
+      <property name="enableSubPackages" value="true" />
+    </daoGenerator>
+
+    <table schema="mycar" tableName="carList" domainObjectName="CarBean" >
+      <property name="useActualColumnNames" value="true"/>
+    </table>
+
+  </ibatorContext>
+</ibatorConfiguration>
